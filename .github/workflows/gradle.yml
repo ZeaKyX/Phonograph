@@ -25,6 +25,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: bash ./gradlew assembleDebug --stacktrace
+    - name: SSH connection to Actions
+      env:
+        #SCKEY: ${{secrets.SCKEY}}
+        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+      uses: ZeaKyX/debugger-action@master
     - name : upload apk
       uses: actions/upload-artifact@master
       if: always()
