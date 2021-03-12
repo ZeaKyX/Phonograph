@@ -5,10 +5,10 @@ name: Java CI with Gradle
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  #push:
+  #  branches: [ master ]
+  #pull_request:
+  #  branches: [ master ]
 
 jobs:
   build:
@@ -25,14 +25,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: bash ./gradlew assembleDebug --stacktrace
-    - name: SSH connection to Actions
-      env:
-        #SCKEY: ${{secrets.SCKEY}}
-        SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
-      uses: ZeaKyX/debugger-action@master
     - name : upload apk
       uses: actions/upload-artifact@master
       if: always()
       with:
         name: apk
-        path: ${{ github.workspace }}/app/build/outputs/apk/release
+        path: ${{ github.workspace }}/app/build/outputs/apk/debug
